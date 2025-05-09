@@ -8,8 +8,9 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Install git and other build tools
-RUN apk add --no-cache git nodejs npm certbot certbot-nginx
+# Install git, Node.js, pnpm, and certbot
+# npm은 nodejs 설치 시 함께 설치될 수 있지만, pnpm을 명시적으로 설치하고 사용합니다.
+RUN apk add --no-cache git nodejs pnpm certbot certbot-nginx
 
 # Create workspace directory for React app
 RUN mkdir -p /workspace
@@ -28,9 +29,9 @@ RUN git clone --single-branch --branch dev_host https://github.com/hyeok8055/ant
 # Set working directory to the cloned app
 WORKDIR /workspace/frontend
 
-# Install dependencies and build the React app
-RUN npm install
-RUN npm run build
+# Install dependencies and build the React app using pnpm
+RUN pnpm install
+RUN pnpm build
 
 # The build output is typically in a 'dist' or 'build' folder.
 # Assuming the build output is in 'build' and nginx root is /workspace/dist as per default.conf

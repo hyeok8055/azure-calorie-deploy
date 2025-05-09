@@ -31,8 +31,7 @@ WORKDIR /workspace/frontend
 
 # Install dependencies and build the React app using pnpm
 RUN pnpm install
-RUN pnpm build
-
+# RUN pnpm build
 # The build output is typically in a 'dist' or 'build' folder.
 # Assuming the build output is in 'build' and nginx root is /workspace/dist as per default.conf
 # We need to ensure the content of /workspace/frontend/build (or dist) is available at /workspace/dist for nginx
